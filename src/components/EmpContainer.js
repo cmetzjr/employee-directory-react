@@ -8,11 +8,6 @@ class EmpContainer extends Component {
     };
 
    
-    //get random employee data
-    componentDidMount() {
-        this.getEmployees();
-    }
-
     //API call for random user data, take the employee data that I want, and set state
     getEmployees = async () => {
         try {
@@ -31,11 +26,18 @@ class EmpContainer extends Component {
         };
     };
 
-     handleInputChange = (value) => {
+    
+    //get random employee data
+    componentDidMount() {
+        this.getEmployees();
+    }
+
+
+    handleInputChange = (value) => {
         console.log(value);
         this.setState({
             employees: this.state.employees.filter(x => x.last.includes(value))
-        })
+        });
     }
 
     render() {
