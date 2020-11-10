@@ -19,8 +19,8 @@ class EmpContainer extends Component {
             const res = await API.getDummyEmp();
             const empInfo = res.data.results.map(emp=>({
                 pic: emp.picture.thumbnail,
-                last: emp.name.first,
-                first: emp.name.last,
+                last: emp.name.last,
+                first: emp.name.first,
                 phone: emp.phone,
                 email: emp.email,
                 id: emp.id.value                 
@@ -34,7 +34,7 @@ class EmpContainer extends Component {
      handleInputChange = (value) => {
         console.log(value);
         this.setState({
-            employees: this.state.employees.filter(x => x.first.includes(value))
+            employees: this.state.employees.filter(x => x.last.includes(value))
         })
     }
 
