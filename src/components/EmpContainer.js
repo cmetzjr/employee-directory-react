@@ -7,6 +7,7 @@ class EmpContainer extends Component {
         employees: []
     };
 
+   
     //get random employee data
     componentDidMount() {
         this.getEmployees();
@@ -30,16 +31,30 @@ class EmpContainer extends Component {
         };
     };
 
+     handleInputChange = (value) => {
+        console.log(value);
+        this.setState({
+            employees: this.state.employees.filter(x => x.first.includes(value))
+        })
+    }
+
     render() {
         return (            
-            <table>
-                <thead>
+            <div>
+                <div className="mb-4">
+                    <h1 className="text-center mb-4">Employee Directory</h1>
+                    <label className="mr-4" htmlFor="text">Search for employees:</label>
+                    <input type="text" onInput={event => this.handleInputChange(event.target.value)} />
+                </div>
+            
+            <table className="table table-sm">
+                <thead className="thead-light">
                     <tr>
-                        <td>Photo</td>
-                        <td>Last Name</td>
-                        <td>First Name</td>
-                        <td>Phone</td>
-                        <td>Email</td>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,6 +69,7 @@ class EmpContainer extends Component {
                     )};
                 </tbody>
             </table>
+            </div>
         )
             
     };
