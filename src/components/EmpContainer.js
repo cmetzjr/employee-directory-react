@@ -5,10 +5,11 @@ class EmpContainer extends Component {
     //set initial state for 2 arrays
     state = {
         employees: [],
-        empFiltered: []
+        empFiltered: [],
+        empSorted: []
     };
 
-   
+    
     //API call for random user data, map the employee data that I want, and set state for both arrays
     getEmployees = async () => {
         try {
@@ -31,14 +32,29 @@ class EmpContainer extends Component {
     //call getEmployees
     componentDidMount() {
         this.getEmployees();
-    }
+    };
 
     //this function will take the search parameters and will update the state of the empFiltered array based on filtering of the employees array
     handleInputChange = (value) => {
         this.setState({
             empFiltered: this.state.employees.filter(x => x.last.includes(value))
         });
-    }
+    };
+
+    //sort by last name
+    empSortedByLastName = this.state.employees.sort((a,b) => {
+        var empA = a.name.toUpperCase();
+        var empB = b.name.toUpperCase();
+        if (empA<empB) {
+            return -1;
+        }
+        if (empA>empB){
+            return 1;
+        }
+        return 0;      
+    });
+
+
 
     render() {
         return (            
@@ -46,7 +62,7 @@ class EmpContainer extends Component {
                 <div className="mb-4">
                     <h1 className="text-center mb-4">Employee Directory</h1>
                     <label className="mr-4" htmlFor="text">Search for employees:</label>
-                    {/* letters typed into the input box (=value) become the parameter of handleInputChange */}
+                    {/* letters typed into the input box (value) become the parameter of handleInputChange */}
                     <input type="text" onInput={event => this.handleInputChange(event.target.value)} />
                 </div>
             
@@ -54,7 +70,7 @@ class EmpContainer extends Component {
                 <thead className="thead-light">
                     <tr>
                         <th scope="col">Photo</th>
-                        <th scope="col">Last Name</th>
+                        <th scope="col" onClick={() => this.empSortedByLastName(employees.name.last)}>Last Name</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Email</th>
