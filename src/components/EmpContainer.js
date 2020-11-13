@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import API from "../utils/API";
 
 class EmpContainer extends Component {
-    //set initial state for 2 arrays
+    //set initial state for 3 arrays
     state = {
         employees: [],
         empFiltered: [],
-        empSorted: []
+        order: "ascend"
     };
 
     
@@ -42,21 +42,55 @@ class EmpContainer extends Component {
     };
 
     //sort by last name
-    empSortedByLastName = this.state.employees.sort((a,b) => {
-        var empA = a.name.toUpperCase();
-        var empB = b.name.toUpperCase();
-        if (empA<empB) {
-            return -1;
+    empSortedByLastName = () => {
+        console.log("run here")
+
+        if (this.state.order === "ascend") {
+
+            this.setState({
+                empFiltered: this.state.employees.sort((a, b) => {
+                    console.log(a.last, "a value", b.last, "b value")
+                    var empA = a.last.toUpperCase();
+                    var empB = b.last.toUpperCase();
+                    if (empA < empB) {
+                        return -1;
+                    }
+                    if (empA > empB) {
+                        return 1;
+                    }
+                    return 0;
+                })
+            });
+            return this.setState({
+                order: "descend"
+            })
         }
-        if (empA>empB){
-            return 1;
-        }
-        return 0;      
-    });
+
+        this.setState({
+            empFiltered: this.state.employees.sort((a, b) => {
+                console.log(a.last, "a value", b.last, "b value")
+                var empA = a.last.toUpperCase();
+                var empB = b.last.toUpperCase();
+                if (empA < empB) {
+                    return 1;
+                }
+                if (empA > empB) {
+                    return -1;
+                }
+                return 0;
+            })
+        });
+        return this.setState({
+            order: "ascend"
+        })
+
+
+    }
 
 
 
     render() {
+       
         return (            
             <div>
                 <div className="mb-4">
@@ -70,13 +104,13 @@ class EmpContainer extends Component {
                 <thead className="thead-light">
                     <tr>
                         <th scope="col">Photo</th>
-                        <th scope="col" onClick={() => this.empSortedByLastName(employees.name.last)}>Last Name</th>
+                        <th scope="col" onClick={() => this.empSortedByLastName()}><span className="small">Click to Sort</span><br />Last Name</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Email</th>
                     </tr>
                 </thead>
-                <tbody> 
+                <tbody>
                     {/* maps the empFiltered array and renders it to the table */}
                     {this.state.empFiltered.map(empInfo=>
                     <tr key={empInfo.id}>                            
@@ -86,7 +120,7 @@ class EmpContainer extends Component {
                         <td>{empInfo.phone}</td>
                         <td>{empInfo.email}</td>
                     </tr>
-                    )};
+                    )}
                 </tbody>
             </table>
             </div>
