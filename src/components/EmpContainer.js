@@ -95,7 +95,7 @@ class EmpContainer extends Component {
             <div>
                 <div className="mb-4">
                     <h1 className="text-center mb-4">Employee Directory</h1>
-                    <label className="mr-4" htmlFor="text">Search for employees:</label>
+                    <label className="mr-4" htmlFor="text">Search for employees (case sensitive):</label>
                     {/* letters typed into the input box (value) become the parameter of handleInputChange */}
                     <input type="text" onInput={event => this.handleInputChange(event.target.value)} />
                 </div>
